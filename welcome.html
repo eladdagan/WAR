@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ברוך הבא</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="personal-welcome-message"></h1>
+        <p>מה תרצה לעשות היום?</p>
+        <button onclick="identifyTerrorists()">לחץ כאן לזהות מחבלים</button>
+        <button onclick="logout()">התנתק</button>
+        <div class="edit-form">
+            <h2>ערוך פרטי משתמש</h2>
+            <input type="text" id="edit-username" placeholder="שם משתמש חדש">
+            <input type="password" id="edit-password" placeholder="סיסמה חדשה">
+            <button onclick="editUser()">עדכן</button>
+        </div>
+    </div>
+    <div class="footer">
+        &copy; 2025 בואו לצבא!
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('currentUser');
+            document.getElementById('personal-welcome-message').innerText = `ברוך הבא, ${username}!`;
+        });
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+
+        function editUser() {
+            const newUsername = document.getElementById('edit-username').value;
+            const newPassword = document.getElementById('edit-password').value;
+            const currentUser = localStorage.getItem('currentUser');
+
+            if (newUsername && newPassword) {
+                localStorage.removeItem(currentUser);
+                localStorage.setItem(newUsername, newPassword);
+                localStorage.setItem('currentUser', newUsername);
+                alert('פרטי המשתמש עודכנו בהצלחה!');
+                document.getElementById('personal-welcome-message').innerText = `ברוך הבא, ${newUsername}!`;
+            } else {
+                alert('אנא מלא את כל השדות.');
+            }
+        }
+
+        function identifyTerrorists() {
+            const hasTerrorists = Math.random() < 0.5;
+            if (hasTerrorists) {
+                const numberOfTerrorists = Math.floor(Math.random() * 10) + 1;
+                alert(`זוהו ${numberOfTerrorists} מחבלים!`);
+            } else {
+                alert('לא זוהו מחבלים.');
+            }
+        }
+    </script>
+</body>
+</html>
