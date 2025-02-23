@@ -10,7 +10,7 @@
     <div class="container">
         <h1 id="personal-welcome-message"></h1>
         <p>מה תרצה לעשות היום?</p>
-        <button onclick="identifyTerrorists()">לחץ כאן לזהות מחבלים</button>
+        <button id="identify-button" onclick="identifyTerrorists()">לחץ כאן לזהות מחבלים</button>
         <button onclick="logout()">התנתק</button>
         <div class="edit-form">
             <h2>ערוך פרטי משתמש</h2>
@@ -49,7 +49,18 @@
             }
         }
 
+        let canIdentify = true;
+
         function identifyTerrorists() {
+            if (!canIdentify) {
+                alert('עליך להמתין דקה!');
+                return;
+            }
+
+            canIdentify = false;
+            const button = document.getElementById('identify-button');
+            button.disabled = true;
+
             const hasTerrorists = Math.random() < 0.5;
             if (hasTerrorists) {
                 const numberOfTerrorists = Math.floor(Math.random() * 10) + 1;
@@ -57,6 +68,11 @@
             } else {
                 alert('לא זוהו מחבלים.');
             }
+
+            setTimeout(() => {
+                button.disabled = false;
+                canIdentify = true;
+            }, 60000); // 1 minute
         }
     </script>
 </body>
